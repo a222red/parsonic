@@ -2,8 +2,8 @@
 {-# LANGUAGE Safe #-}
 
 module Text.Parsonic (
-    Parser,
-    ParseError,
+    Parser (..),
+    ParseError (..),
     eof,
     unexpected,
     satisfy,
