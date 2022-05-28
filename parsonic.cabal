@@ -4,7 +4,7 @@ version:            0.1.0.0
 
 synopsis: Simple monadic parser combinators.
 
--- license: GPL
+license: GPL-3.0-or-later
 author:             a222red
 maintainer:         73256177+a222red@users.noreply.github.com
 
