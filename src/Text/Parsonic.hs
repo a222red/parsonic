@@ -9,7 +9,7 @@ module Text.Parsonic (
 ) where
 
 import Control.Applicative (Alternative (..))
-import safe Data.Functor ()
+import Data.Functor
 import Data.Semigroup (Semigroup (..))
 
 data ParseError i e = Empty
