@@ -90,6 +90,11 @@ satisfy predicate = Parser $ \case
         | predicate hd -> Right (hd, rest)
         | otherwise -> Left (Unexpected hd)
 
+lookAhead :: Parser i e t -> Parser i e t
+lookAhead (Parser p) = Parser $ \input -> case p input of
+    Left err -> Left err
+    Right (output, _) -> Right (output, input)
+
 notFollowedBy :: Parser i e t0 -> Parser i e t1 -> Parser i e t1
 notFollowedBy (Parser e) (Parser p) = Parser $ \input -> case p input of
     Left err -> Left err
