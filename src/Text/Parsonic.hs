@@ -112,6 +112,9 @@ manyUntil (Parser e) (Parser p) = Parser $ \input -> case e input of
                 Right (output', rest') -> Right (output:output', rest')
     Right (_, _) -> Right ([], input)
 
+anyChar :: Parser i e i
+anyChar = satisfy (const True)
+
 char :: Eq i => i -> Parser i e i
 char c = satisfy (==c)
 
