@@ -7,6 +7,7 @@ module Text.Parsonic (
     eof,
     unexpected,
     satisfy,
+    notFollowedBy,
     char,
     string,
     count,
@@ -84,6 +85,13 @@ satisfy predicate = Parser $ \case
     hd:rest
         | predicate hd -> Right (hd, rest)
         | otherwise -> Left (Unexpected hd)
+
+notFollowedBy :: Parser i e t0 -> Parser i e t1 -> Parser i e t1
+notFollowedBy (Parser e) (Parser p) = Parser $ \input -> case p input of
+    Left err -> Left err
+    Right (output, rest) -> case e rest of
+        Left _ -> Right (output, rest)
+        Right (_, rest') -> Left (Unexpected (head rest))
 
 char :: Eq i => i -> Parser i e i
 char c = satisfy (==c)
