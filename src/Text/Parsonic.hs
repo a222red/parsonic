@@ -79,6 +79,9 @@ unexpected = Parser $ \case
     [] -> Left EndOfInput
     hd:rest -> Left (Unexpected hd)
 
+customError :: e -> Parser i e t
+customError msg = Parser $ const (Left (CustomError msg))
+
 satisfy :: (i -> Bool) -> Parser i e i
 satisfy predicate = Parser $ \case
     [] -> Left EndOfInput
