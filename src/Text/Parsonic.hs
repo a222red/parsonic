@@ -8,6 +8,7 @@ module Text.Parsonic (
     unexpected,
     satisfy,
     notFollowedBy,
+    manyUntil,
     char,
     string,
     count,
@@ -95,6 +96,16 @@ notFollowedBy (Parser e) (Parser p) = Parser $ \input -> case p input of
     Right (output, rest) -> case e rest of
         Left _ -> Right (output, rest)
         Right (_, rest') -> Left (Unexpected (head rest))
+
+manyUntil :: Parser i e t0 -> Parser i e t1 -> Parser i e [t1]
+manyUntil (Parser e) (Parser p) = Parser $ \input -> case e input of
+    Left _ -> case p input of
+        Left err -> Left err
+        Right (output, rest) ->
+            case runParser (manyUntil (Parser e) (Parser p)) rest of
+                Left err -> Left err
+                Right (output', rest') -> Right (output:output', rest')
+    Right (_, _) -> Right ([], input)
 
 char :: Eq i => i -> Parser i e i
 char c = satisfy (==c)
