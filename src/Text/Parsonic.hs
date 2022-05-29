@@ -100,7 +100,9 @@ notFollowedBy (Parser e) (Parser p) = Parser $ \input -> case p input of
     Left err -> Left err
     Right (output, rest) -> case e rest of
         Left _ -> Right (output, rest)
-        Right (_, rest') -> Left (Unexpected (head rest))
+        Right (_, rest') -> case rest of
+            [] -> Right (output, [])
+            (hd:_) -> Left (Unexpected hd)
 
 manyUntil :: Parser i e t0 -> Parser i e t1 -> Parser i e [t1]
 manyUntil (Parser e) (Parser p) = Parser $ \input -> case e input of
@@ -117,6 +119,9 @@ anyChar = satisfy (const True)
 
 char :: Eq i => i -> Parser i e i
 char c = satisfy (==c)
+
+notChar :: Eq i => i -> Parser i e i
+notChar c = satisfy (/= c)
 
 string :: Eq i => [i] -> Parser i e [i]
 string = traverse char
