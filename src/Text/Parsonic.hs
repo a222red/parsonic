@@ -2,25 +2,10 @@
 {-# LANGUAGE Safe #-}
 
 module Text.Parsonic (
-    Parser (..),
-    ParseError (..),
-    eof,
-    unexpected,
-    satisfy,
-    notFollowedBy,
-    manyUntil,
-    anyChar,
-    char,
-    notChar,
-    string,
-    count,
-    between,
-    option,
-    choice,
-    sepBy,
-    sepBy1,
-    chainl,
-    chainl1
+    module Text.Parsonic,
+    module Control.Applicative,
+    module Data.Functor,
+    module Data.Semigroup
 ) where
 
 import Control.Applicative (Alternative (..))
