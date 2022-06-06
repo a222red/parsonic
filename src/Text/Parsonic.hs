@@ -47,7 +47,7 @@ instance Alternative (Parser i e) where
 
     Parser l <|> Parser r = Parser $ \input -> case l input of
         Left err -> case r input of
-            Left err' -> Left err
+            Left err' -> Left err'
             Right (output, rest) -> Right (output, rest)
         Right (output, rest) -> Right (output, rest)
 
