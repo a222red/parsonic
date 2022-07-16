@@ -110,6 +110,9 @@ char c = satisfy (==c)
 notChar :: Eq i => i -> Parser i e i
 notChar c = satisfy (/= c)
 
+anyOf :: Eq i => [i] -> Parser i e i
+anyOf cs = satisfy (`elem` cs)
+
 string :: Eq i => [i] -> Parser i e [i]
 string = traverse char
 
