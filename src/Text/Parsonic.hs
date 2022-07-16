@@ -120,6 +120,9 @@ count n p = (:) <$> p <*> count (n - 1) p
 between :: Parser i e t0 -> Parser i e t1 -> Parser i e t2 -> Parser i e t2
 between left right middle = left *> middle <* right
 
+interspersedWith :: Parser i e t0 -> [Parser i e t1] -> Parser i e [t1]
+interspersedWith sep = mapM (sep *>)
+
 option :: t -> Parser i e t -> Parser i e t
 option x p = p <|> return x
 
