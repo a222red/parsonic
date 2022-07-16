@@ -43,7 +43,7 @@ instance Monad (Parser i e) where
         runParser (k output) rest
 
 instance Alternative (Parser i e) where
-    empty = Parser $ \_ -> Left Empty
+    empty = Parser $ const (Left Empty)
 
     Parser l <|> Parser r = Parser $ \input -> case l input of
         Left err -> case r input of
